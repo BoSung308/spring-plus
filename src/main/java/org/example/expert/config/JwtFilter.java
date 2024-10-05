@@ -61,6 +61,10 @@ public class JwtFilter implements Filter {
             httpRequest.setAttribute("email", claims.get("email"));
             httpRequest.setAttribute("userRole", claims.get("userRole"));
 
+            // 닉네임 추출 요청
+            String nickName = jwtUtil.extractNickName(jwt);
+            httpRequest.setAttribute("nickName", nickName);
+
             if (url.startsWith("/admin")) {
                 // 관리자 권한이 없는 경우 403을 반환합니다.
                 if (!UserRole.ADMIN.equals(userRole)) {
