@@ -17,13 +17,13 @@ public class Manager {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false) // 일정 만든 사람 id
-    private User user;
+    private User managerUser;
     @ManyToOne(fetch = FetchType.LAZY) // 일정 id
     @JoinColumn(name = "todo_id", nullable = false)
     private Todo todo;
 
-    public Manager(User user, Todo todo) {
-        this.user = user;
+    public Manager(User managerUser, Todo todo) {
+        this.managerUser = managerUser;
         this.todo = todo;
     }
 }

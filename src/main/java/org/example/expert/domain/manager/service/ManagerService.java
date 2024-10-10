@@ -64,7 +64,7 @@ public class ManagerService {
 
         List<ManagerResponse> dtoList = new ArrayList<>();
         for (Manager manager : managerList) {
-            User user = manager.getUser();
+            User user = manager.getManagerUser();
             dtoList.add(new ManagerResponse(
                     manager.getId(),
                     new UserResponse(user.getId(), user.getEmail())
