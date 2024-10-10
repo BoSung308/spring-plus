@@ -1,14 +1,20 @@
 package org.example.expert.domain.user.entity;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.example.expert.domain.common.dto.AuthUser;
 import org.example.expert.domain.common.entity.Timestamped;
 import org.example.expert.domain.user.enums.UserRole;
+import org.springframework.security.core.GrantedAuthority;
+
 
 @Getter
 @Entity
+@Builder
+@AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "users")
 public class User extends Timestamped {
@@ -37,7 +43,16 @@ public class User extends Timestamped {
     }
 
     public static User fromAuthUser(AuthUser authUser) {
-        return new User(authUser.getId(), authUser.getEmail(), authUser.getUserRole());
+        return User.builder()
+                .email(authUser.getEmail())
+                .id(authUser.getId())
+                .userRole(UserRole.of(authUser.getAuthorities().stream()
+                .map(GrantedAuthority::getAuthority)
+                .findFirst() // 47번부터 49번까지 gpt 이용했습니다..코드를 작성 못하겠습니다..
+                .orElse(UserRole.ROLE_USER.name()))
+                )
+                .build();
+
     }
 
     public void changePassword(String password) {
