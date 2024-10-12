@@ -12,4 +12,16 @@
 
 ### 4. 테스트 코드 - Controller Test
 - 예외가 발생할 때, 400 BAD_REQUEST가 발생해야했지만 200 code가 발생되어 오류 나던 현상을 수정 
+
+### 5. JPA의 이해 - JPA 검색 추가(JPQL 활용)
+- @Query 애너테이션을 사용하여 동적으로 쿼리로 조건에 맞도록 작성하고, Todo 객체들을 조회한다. Pageable 파라미터를 통해 페이징 처리를 하며, Page로 결과를 반환하도록 사용
+
+### 6. JPA Cascade 
+- CascadeType.Persist를 사용하여, 부모 엔티티를 저장할 때, 자식 엔티티도 함게 저장하도록 사용
+
+### 7. N+1 문제 해결
+- @Query("SELECT c FROM Comment c JOIN c.user WHERE c.todo.id = :todoId")
+-> @Query("SELECT c FROM Comment c JOIN FETCH c.user WHERE c.todo.id = :todoId") JOIN FETCH를 사용해줘서 지연 로딩을 회피하고 Comment 엔티티와 연관된 엔티티를 한번에 가져오게 설정. 이렇게 FETCH JOIN을 사용함으로써, DB 쿼리가 한번만 실행하고 N+1을 해결.
+
+  
 --------
