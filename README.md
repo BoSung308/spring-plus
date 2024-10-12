@@ -23,5 +23,11 @@
 - @Query("SELECT c FROM Comment c JOIN c.user WHERE c.todo.id = :todoId")
 -> @Query("SELECT c FROM Comment c JOIN FETCH c.user WHERE c.todo.id = :todoId") JOIN FETCH를 사용해줘서 지연 로딩을 회피하고 Comment 엔티티와 연관된 엔티티를 한번에 가져오게 설정. 이렇게 FETCH JOIN을 사용함으로써, DB 쿼리가 한번만 실행하고 N+1을 해결.
 
+### 8. QueryDsl 사용
+- JPQL로 작성된 쿼리를 QueryDsl로 변경함으로써, 보다 직관적인 코드를 작성할 수 있고 동적 쿼리를 쉽게 작성가능하도록 함.
+- todo 엔티티를 조회하여, todo 엔티티와 user 엔티티를 left join으로 연결한다. fetch join을 사용하여 연관된 엔티티를 함께 조회하다록하여 N+1을 해결하고, fetchOne으로 쿼리 결과를 하나만 가져오도록 함.
+
+### 9. Spring  Security
+- Filter와 Arguement Resolver 대신 Spring Security를 사용함으로써, JwtAuthenticationToken 클래스는 인증 정보를 보유하여, 사용자를 인증하도록 했다. SecurityConfig 클래스로 인하여, 기존의 인증방식을 일부 비활성화해서 jwt를 기반하여 인증만 처리하도록 사용.
   
 --------
